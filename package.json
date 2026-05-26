@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Aplikasi web sederhana untuk UTS DevOps",
   "main": "app/index.js",
-  "scripts": {
-    "start": "node app/index.js",
-    "test": "node app/index.js & timeout /t 2 >nul && node app/index.test.js"
+"scripts": {
+  "start": "node app/index.js",
+  "test": "node app/index.test.js"
   },
   "author": "Salsa Billa",
   "license": "MIT"

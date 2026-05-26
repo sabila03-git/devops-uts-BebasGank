@@ -1,0 +1,45 @@
+name: CI Pipeline - DevOps UTS
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  build-and-test:
+    name: Build dan Test Aplikasi
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout kode dari repo
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Step 3: Install dependencies (kalau ada)
+      - name: Install Dependencies
+        run: |
+          echo "Menginstal dependencies..."
+          npm install --if-present
+
+      # Step 4: Jalankan unit test
+      - name: Run Unit Tests
+        run: |
+          echo "Menjalankan unit test..."
+          npm test
+
+      # Step 5: Build sukses
+      - name: Build Success Notification
+        run: |
+          echo "✅ CI Pipeline berhasil dijalankan!"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Author: ${{ github.actor }}"

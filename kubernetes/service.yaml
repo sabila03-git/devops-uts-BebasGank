@@ -1,0 +1,20 @@
+# kubernetes/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-uts-service
+  labels:
+    app: devops-uts-app
+spec:
+  # NodePort: ekspos aplikasi ke luar cluster via port di node
+  type: NodePort
+  
+  selector:
+    app: devops-uts-app
+  
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80          # Port yang diekspos oleh Service
+      targetPort: 3000  # Port container aplikasi
+      nodePort: 30080   # Port di node (range 30000-32767)

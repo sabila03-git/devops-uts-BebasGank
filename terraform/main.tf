@@ -11,7 +11,7 @@ terraform {
 
 # Provider Docker
 provider "docker" {
-  host = "unix:///var/run/docker.sock"
+  host = "npipe:////./pipe/docker_engine"
 }
 
 # Resource: Pull image aplikasi kita

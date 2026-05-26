@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
 
@@ -38,28 +38,27 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Login ke Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
         run: |
+          echo "Isi direktori:"
           ls -la
-          docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/devops-uts-app:latest .
-          docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/devops-uts-app:${{ github.sha }} .
+          echo "Build image..."
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-uts-app:latest .
 
       - name: Push ke Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/devops-uts-app:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/devops-uts-app:${{ github.sha }}
 
       - name: Deploy ke Staging
         run: |
-          echo "Deploying ke staging environment..."
+          echo "Deploying ke staging..."
           echo "Image: ${{ secrets.DOCKER_USERNAME }}/devops-uts-app:latest"
-          echo "Commit: ${{ github.sha }}"
-          echo "Deployment ke staging berhasil!"
+          echo "Deployment berhasil!"
